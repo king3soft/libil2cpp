@@ -1472,3 +1472,13 @@ void il2cpp_unity_set_android_network_up_state_func(Il2CppAndroidUpStateFunc fun
 {
     AndroidRuntime::SetNetworkUpStateFunc(func);
 }
+
+// il2cpp memory patch begin
+#include "gc/gc_wrapper.h"
+
+
+bool il2cpp_object_is_alive(void* ptr)
+{
+    return GC_is_marked(ptr);
+}
+// il2cpp memory patch end

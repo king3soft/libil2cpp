@@ -44,6 +44,10 @@
 #include <limits>
 #include <stdarg.h>
 
+#pragma optimize( "", off )
+extern "C" IL2CPP_EXPORT void il2cpp_vm_class_init_marker(void* kls){};
+#pragma optimize( "", on )
+
 namespace il2cpp
 {
 namespace vm
@@ -1537,7 +1541,7 @@ namespace vm
         klass->init_pending = false;
 
         ++il2cpp_runtime_stats.initialized_class_count;
-
+        il2cpp_vm_class_init_marker(klass);
         return true;
     }
 

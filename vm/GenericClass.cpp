@@ -13,6 +13,10 @@
 #include "il2cpp-runtime-metadata.h"
 #include "il2cpp-runtime-stats.h"
 
+#pragma optimize( "", off )
+extern "C" IL2CPP_EXPORT void il2cpp_vm_method_setup_marker(void*, const void*){};
+#pragma optimize( "", on )
+
 namespace il2cpp
 {
 namespace vm
@@ -39,7 +43,16 @@ namespace vm
 
         genericInstanceType->methods = methods;
 
-        il2cpp_runtime_stats.method_count += methodCount;
+        il2cpp_runtime_stats.method_count += methodCount;       
+        // il2cpp memory patch begin
+        do
+        {
+            for (uint16_t i = 0; i < methodCount; ++i)
+            {
+                il2cpp_vm_method_setup_marker(genericInstanceType, methods[i]);
+            }         
+        } while (0);        
+        // il2cpp memory patch end
     }
 
     static void InflatePropertyDefinition(const PropertyInfo* propertyDefinition, PropertyInfo* newProperty, Il2CppClass* declaringClass, Il2CppGenericContext* context)

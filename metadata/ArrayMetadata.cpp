@@ -41,6 +41,10 @@ using std::pair;
 
 const size_t kImplicitArrayInterfaceCount = 5;
 
+#pragma optimize( "", off )
+extern "C" IL2CPP_EXPORT void il2cpp_array_method_setup_marker(void* kls, void* methodInfo){};
+#pragma optimize( "", on )
+
 namespace il2cpp
 {
 namespace metadata
@@ -86,7 +90,9 @@ namespace metadata
         }
 
         ++il2cpp_runtime_stats.method_count;
-
+        // il2cpp memory patch begin
+        il2cpp_array_method_setup_marker(declaringType, method);
+        // il2cpp memory patch end
         return method;
     }
 

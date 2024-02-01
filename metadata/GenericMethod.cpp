@@ -59,6 +59,10 @@ static MethodInfo* AllocCopyGenericMethodInfo(const MethodInfo* sourceMethodInfo
     return newMethodInfo;
 }
 
+#pragma optimize( "", off )
+extern "C" IL2CPP_EXPORT void il2cpp_inflated_method_setup_marker(void* kls, void* methodInfo){};
+#pragma optimize( "", on )
+
 namespace il2cpp
 {
 namespace metadata
@@ -295,7 +299,10 @@ namespace metadata
 
         // Remove the method from the pending table
         s_PendingGenericMethodMap.Remove(gmethod);
-
+        
+        // il2cpp memory patch begin
+        il2cpp_inflated_method_setup_marker(gmethod->methodDefinition->klass, newMethod);
+        // il2cpp memory patch end
         return newMethod;
     }
 
